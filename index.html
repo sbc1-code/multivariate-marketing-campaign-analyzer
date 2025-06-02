@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Performance Tracker</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .upload-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f8fafc;
+        }
+        
+        .upload-area.dragover {
+            border-color: #667eea;
+            background: #eff6ff;
+        }
+        
+        .demo-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .demo-button:hover {
+            background: #5a67d8;
+        }
+        
+        .demo-button.secondary {
+            background: #64748b;
+        }
+        
+        .demo-button.secondary:hover {
+            background: #475569;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .performance-matrix {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .matrix-table th {
+            background: #f1f5f9;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+        
+        .matrix-table td {
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+        
+        .message-label {
+            font-weight: 600;
+            background: #f8fafc;
+            color: #475569;
+            text-align: left !important;
+            font-size: 0.9rem;
+        }
+        
+        .metric-cell {
+            background: white;
+            position: relative;
+        }
+        
+        .metric-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .metric-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .significance-badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .sig-high { background: #10b981; }
+        .sig-medium { background: #f59e0b; }
+        .sig-low { background: #ef4444; }
+        
+        .recommendations {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .rec-item {
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .rec-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .rec-title {
+            font-weight: 600;
+            color: #0c4a6e;
+            margin-bottom: 0.5rem;
+        }
+        
+        .rec-action {
+            color: #075985;
+            font-size: 0.95rem;
+        }
+        
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+        
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+        
+        .stats-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .csv-format {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+        }
+        
+        .format-info {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .format-info h4 {
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+        
+        .format-info p {
+            color: #78350f;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Campaign Performance Tracker</h1>
+            <p>Analyze message effectiveness across audience segments with statistical rigor</p>
+            <div style="background: rgba(255,255,255,0.2); border-radius: 6px; padding: 1rem; margin-top: 1rem; font-size: 0.9rem;">
+                <strong>📋 Concept Demo:</strong> This is a functional prototype demonstrating core analytics capabilities. A production version would include advanced statistical testing, real-time data integration, and enterprise security features.
+            </div>
+        </div>
+
+        <div class="upload-section">
+            <h2 class="section-title">Campaign Data Upload</h2>
+            <div class="upload-area" id="uploadArea">
+                <div>
+                    <p style="font-size: 1.2rem; margin-bottom: 1rem;">📈 Drop your campaign CSV file here</p>
+                    <p style="color: #64748b;">Or click to browse files</p>
+                    <div class="demo-buttons">
+                        <button class="demo-button" onclick="loadSampleData()">Load Sample Campaign</button>
+                        <button class="demo-button secondary" onclick="downloadTemplate()">Download CSV Template</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="format-info">
+                <h4>📋 Smart CSV Processing</h4>
+                <p>Upload any campaign CSV - the tool will automatically detect and map your columns. Works with most ad platform exports (Google Ads, Facebook, etc.)</p>
+            </div>
+        </div>
+
+        <div id="analysisSection" style="display: none;">
+            <div class="stats-summary">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalImpressions">-</div>
+                    <div class="stat-label">Total Impressions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="avgCTR">-</div>
+                    <div class="stat-label">Average CTR</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="bestCombo">-</div>
+                    <div class="stat-label">High Performers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="costEfficiency">-</div>
+                    <div class="stat-label">Avg Cost per Click</div>
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="performance-matrix">
+                    <h2 class="section-title">Performance Matrix</h2>
+                    <p style="color: #64748b; margin-bottom: 1rem;">CTR performance by message category and audience segment</p>
+                    
+                    <div id="matrixContainer">
+                        <!-- Matrix will be dynamically generated -->
+                    </div>
+                    
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: #64748b;">
+                        <span style="display: inline-flex; align-items: center; margin-right: 1rem;">
+                            <div class="significance-badge sig-high" style="position: static; margin-right: 0.5rem;"></div>
+                            High Performance
+                        </span>
+                        <span style="display: inline-flex; align-items: center; margin-right: 1rem;">
+                            <div class="significance-badge sig-medium" style="position: static; margin-right: 0.5rem;"></div>
+                            Medium Performance
+                        </span>
+                        <span style="display: inline-flex; align-items: center;">
+                            <div class="significance-badge sig-low" style="position: static; margin-right: 0.5rem;"></div>
+                            Low Performance
+                        </span>
+                    </div>
+                </div>
+
+                <div class="recommendations">
+                    <h2 class="section-title">Smart Recommendations</h2>
+                    <div id="recommendationsContainer">
+                        <!-- Recommendations will be dynamically generated -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-section">
+                <div class="chart-container">
+                    <div class="chart-title">Performance Trends Over Time</div>
+                    <canvas id="trendChart" width="400" height="200"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">Audience Performance Comparison</div>
+                    <canvas id="audienceChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let campaignData = [];
+        let processedData = {};
+
+        // Sample data for demonstration
+        const sampleData = [
+            {Message_Category: "Superior Taste", Audience_Segment: "Moms 25-45", Week: "1", Impressions: "45000", Clicks: "95", CTR: "0.21%", Conversions: "19", Conversion_Rate: "20.0%", Cost: "285", CPC: "3.00"},
+            {Message_Category: "Superior Taste", Audience_Segment: "Moms 25-45", Week: "2", Impressions: "48000", Clicks: "134", CTR: "0.28%", Conversions: "28", Conversion_Rate: "20.9%", Cost: "315", CPC: "2.35"},
+            {Message_Category: "Superior Taste", Audience_Segment: "Moms 25-45", Week: "3", Impressions: "52000", Clicks: "182", CTR: "0.35%", Conversions: "38", Conversion_Rate: "20.9%", Cost: "340", CPC: "1.87"},
+            {Message_Category: "Superior Taste", Audience_Segment: "Budget-Conscious", Week: "1", Impressions: "32000", Clicks: "38", CTR: "0.12%", Conversions: "6", Conversion_Rate: "15.8%", Cost: "190", CPC: "5.00"},
+            {Message_Category: "Superior Taste", Audience_Segment: "Budget-Conscious", Week: "2", Impressions: "34000", Clicks: "51", CTR: "0.15%", Conversions: "9", Conversion_Rate: "17.6%", Cost: "210", CPC: "4.12"},
+            {Message_Category: "Superior Taste", Audience_Segment: "Health-Conscious", Week: "1", Impressions: "38000", Clicks: "68", CTR: "0.18%", Conversions: "12", Conversion_Rate: "17.6%", Cost: "255", CPC: "3.75"},
+            {Message_Category: "Superior Taste", Audience_Segment: "Health-Conscious", Week: "2", Impressions: "41000", Clicks: "103", CTR: "0.25%", Conversions: "21", Conversion_Rate: "20.4%", Cost: "280", CPC: "2.72"},
+            {Message_Category: "Family Time", Audience_Segment: "Moms 25-45", Week: "1", Impressions: "46000", Clicks: "97", CTR: "0.21%", Conversions: "20", Conversion_Rate: "20.6%", Cost: "290", CPC: "2.99"},
+            {Message_Category: "Family Time", Audience_Segment: "Moms 25-45", Week: "2", Impressions: "49000", Clicks: "137", CTR: "0.28%", Conversions: "29", Conversion_Rate: "21.2%", Cost: "320", CPC: "2.34"},
+            {Message_Category: "Family Time", Audience_Segment: "Budget-Conscious", Week: "1", Impressions: "31000", Clicks: "31", CTR: "0.10%", Conversions: "4", Conversion_Rate: "12.9%", Cost: "180", CPC: "5.81"},
+            {Message_Category: "Family Time", Audience_Segment: "Health-Conscious", Week: "1", Impressions: "37000", Clicks: "52", CTR: "0.14%", Conversions: "8", Conversion_Rate: "15.4%", Cost: "240", CPC: "4.62"},
+            {Message_Category: "Number of Options", Audience_Segment: "Moms 25-45", Week: "1", Impressions: "44000", Clicks: "66", CTR: "0.15%", Conversions: "11", Conversion_Rate: "16.7%", Cost: "265", CPC: "4.02"},
+            {Message_Category: "Number of Options", Audience_Segment: "Budget-Conscious", Week: "1", Impressions: "33000", Clicks: "50", CTR: "0.15%", Conversions: "8", Conversion_Rate: "16.0%", Cost: "220", CPC: "4.40"},
+            {Message_Category: "Number of Options", Audience_Segment: "Budget-Conscious", Week: "2", Impressions: "35000", Clicks: "70", CTR: "0.20%", Conversions: "12", Conversion_Rate: "17.1%", Cost: "250", CPC: "3.57"},
+            {Message_Category: "Influencer Supported", Audience_Segment: "Health-Conscious", Week: "1", Impressions: "35000", Clicks: "70", CTR: "0.20%", Conversions: "12", Conversion_Rate: "17.1%", Cost: "280", CPC: "4.00"},
+            {Message_Category: "Influencer Supported", Audience_Segment: "Health-Conscious", Week: "2", Impressions: "37000", Clicks: "89", CTR: "0.24%", Conversions: "16", Conversion_Rate: "18.0%", Cost: "310", CPC: "3.48"}
+        ];
+
+        function loadSampleData() {
+            campaignData = sampleData;
+            processData();
+            document.getElementById('analysisSection').style.display = 'block';
+            document.getElementById('uploadArea').innerHTML = '<p style="color: #10b981; font-weight: 600;">✅ Sample campaign data loaded (' + campaignData.length + ' data points)</p>';
+        }
+
+        function downloadTemplate() {
+            const template = "Message_Category,Audience_Segment,Week,Impressions,Clicks,CTR,Conversions,Conversion_Rate,Cost,CPC\nSuperior Taste,Moms 25-45,1,45000,95,0.21%,19,20.0%,285,3.00\nFamily Time,Budget-Conscious,1,31000,31,0.10%,4,12.9%,180,5.81";
+            const blob = new Blob([template], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'campaign_template.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        function isValidRow(row) {
+            const required = ["Message_Category", "Audience_Segment", "Impressions", "Clicks", "Cost"];
+            return required.every(key => row[key] && row[key].toString().trim() !== '') &&
+                   !isNaN(parseFloat(row.Impressions)) &&
+                   !isNaN(parseFloat(row.Clicks)) &&
+                   !isNaN(parseFloat(row.Cost));
+        }
+
+        function processData() {
+            // Validate and clean data
+            const validData = campaignData.filter(isValidRow);
+            const invalidCount = campaignData.length - validData.length;
+            
+            if (invalidCount > 0) {
+                console.warn(`Filtered out ${invalidCount} invalid rows`);
+            }
+            
+            if (validData.length === 0) {
+                alert('No valid data found. Please check your CSV format.');
+                return;
+            }
+
+            // Calculate aggregated metrics
+            let totalImpressions = 0;
+            let totalClicks = 0;
+            let totalCost = 0;
+            const combinations = {};
+            const weeklyTrends = {};
+
+            validData.forEach(row => {
+                const impressions = parseInt(row.Impressions) || 0;
+                const clicks = parseInt(row.Clicks) || 0;
+                const cost = parseFloat(row.Cost) || 0;
+                const week = row.Week;
+                const combo = `${row.Message_Category}_${row.Audience_Segment}`;
+
+                totalImpressions += impressions;
+                totalClicks += clicks;
+                totalCost += cost;
+
+                // Aggregate by combination
+                if (!combinations[combo]) {
+                    combinations[combo] = {
+                        impressions: 0,
+                        clicks: 0,
+                        cost: 0,
+                        message: row.Message_Category,
+                        audience: row.Audience_Segment
+                    };
+                }
+                combinations[combo].impressions += impressions;
+                combinations[combo].clicks += clicks;
+                combinations[combo].cost += cost;
+
+                // Weekly trends
+                if (!weeklyTrends[week]) weeklyTrends[week] = {};
+                if (!weeklyTrends[week][combo]) {
+                    weeklyTrends[week][combo] = { clicks: 0, impressions: 0 };
+                }
+                weeklyTrends[week][combo].clicks += clicks;
+                weeklyTrends[week][combo].impressions += impressions;
+            });
+
+            // Update summary stats
+            const avgCTR = ((totalClicks / totalImpressions) * 100).toFixed(2);
+            const avgCPC = (totalCost / totalClicks).toFixed(2);
+            const highPerformers = Object.values(combinations).filter(c => 
+                (c.clicks / c.impressions) > 0.002
+            ).length;
+
+            document.getElementById('totalImpressions').textContent = 
+                totalImpressions > 1000000 ? (totalImpressions / 1000000).toFixed(1) + 'M' : 
+                totalImpressions > 1000 ? (totalImpressions / 1000).toFixed(0) + 'K' : 
+                totalImpressions.toString();
+            
+            document.getElementById('avgCTR').textContent = avgCTR + '%';
+            document.getElementById('costEfficiency').textContent = '$' + avgCPC;
+            document.getElementById('bestCombo').textContent = highPerformers + '/' + Object.keys(combinations).length;
+
+            // Store processed data
+            processedData = { combinations, weeklyTrends };
+
+            // Generate matrix and recommendations
+            generatePerformanceMatrix();
+            generateRecommendations();
+            initCharts();
+        }
+
+        function generatePerformanceMatrix() {
+            const messages = [...new Set(campaignData.map(d => d.Message_Category))];
+            const audiences = [...new Set(campaignData.map(d => d.Audience_Segment))];
+            
+            let html = '<table class="matrix-table"><thead><tr><th></th>';
+            audiences.forEach(audience => {
+                html += `<th>${audience}</th>`;
+            });
+            html += '</tr></thead><tbody>';
+
+            messages.forEach(message => {
+                html += `<tr><td class="message-label">${message}</td>`;
+                audiences.forEach(audience => {
+                    const combo = processedData.combinations[`${message}_${audience}`];
+                    if (combo) {
+                        const ctr = ((combo.clicks / combo.impressions) * 100).toFixed(2);
+                        const performance = parseFloat(ctr);
+                        const badgeClass = performance > 0.25 ? 'sig-high' : 
+                                         performance > 0.15 ? 'sig-medium' : 'sig-low';
+                        
+                        html += `<td class="metric-cell">
+                            <div class="significance-badge ${badgeClass}"></div>
+                            <div class="metric-value">${ctr}%</div>
+                            <div class="metric-label">CTR</div>
+                        </td>`;
+                    } else {
+                        html += `<td class="metric-cell">
+                            <div class="metric-value">-</div>
+                            <div class="metric-label">No data</div>
+                        </td>`;
+                    }
+                });
+                html += '</tr>';
+            });
+
+            html += '</tbody></table>';
+            document.getElementById('matrixContainer').innerHTML = html;
+        }
+
+        function generateRecommendations() {
+            const combos = Object.entries(processedData.combinations)
+                .map(([key, data]) => ({
+                    key,
+                    ...data,
+                    ctr: (data.clicks / data.impressions) * 100,
+                    cpc: data.cost / data.clicks
+                }))
+                .sort((a, b) => b.ctr - a.ctr);
+
+            let html = '';
+            
+            if (combos.length > 0) {
+                const best = combos[0];
+                html += `<div class="rec-item">
+                    <div class="rec-title">🎯 Top Performer</div>
+                    <div class="rec-action">${best.message} + ${best.audience} showing ${best.ctr.toFixed(2)}% CTR</div>
+                </div>`;
+
+                const worst = combos[combos.length - 1];
+                if (combos.length > 1) {
+                    html += `<div class="rec-item">
+                        <div class="rec-title">💰 Budget Reallocation</div>
+                        <div class="rec-action">Consider moving budget from ${worst.message}+${worst.audience} (${worst.ctr.toFixed(2)}% CTR) to ${best.message}+${best.audience}</div>
+                    </div>`;
+                }
+
+                const underperformers = combos.filter(c => c.ctr < 0.15);
+                if (underperformers.length > 0) {
+                    html += `<div class="rec-item">
+                        <div class="rec-title">⚠️ Underperforming</div>
+                        <div class="rec-action">${underperformers.length} combination(s) showing <0.15% CTR - consider creative refresh</div>
+                    </div>`;
+                }
+
+                const highPerformers = combos.filter(c => c.ctr > 0.25);
+                if (highPerformers.length > 0) {
+                    html += `<div class="rec-item">
+                        <div class="rec-title">📈 Scale Opportunity</div>
+                        <div class="rec-action">${highPerformers.length} combination(s) performing >0.25% CTR - consider increased investment</div>
+                    </div>`;
+                }
+            }
+
+            document.getElementById('recommendationsContainer').innerHTML = html || '<p>Upload data to see recommendations</p>';
+        }
+
+        function initCharts() {
+            const trendCtx = document.getElementById('trendChart').getContext('2d');
+            const audienceCtx = document.getElementById('audienceChart').getContext('2d');
+            
+            // Dynamic trend chart using real data
+            const weeks = [...new Set(campaignData.map(d => d.Week))].sort((a, b) => parseInt(a) - parseInt(b));
+            const avgCTRPerWeek = weeks.map(week => {
+                const rows = campaignData.filter(d => d.Week === week);
+                const totalClicks = rows.reduce((sum, r) => sum + (parseInt(r.Clicks) || 0), 0);
+                const totalImpressions = rows.reduce((sum, r) => sum + (parseInt(r.Impressions) || 0), 0);
+                return totalImpressions ? ((totalClicks / totalImpressions) * 100).toFixed(2) : 0;
+            });
+
+            new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: weeks.map(w => `Week ${w}`),
+                    datasets: [{
+                        label: 'Average CTR',
+                        data: avgCTRPerWeek,
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Dynamic audience chart using real data
+            const audiences = [...new Set(campaignData.map(d => d.Audience_Segment))];
+            const audienceData = audiences.map(audience => {
+                const audienceRows = campaignData.filter(d => d.Audience_Segment === audience);
+                const totalClicks = audienceRows.reduce((sum, row) => sum + (parseInt(row.Clicks) || 0), 0);
+                const totalImpressions = audienceRows.reduce((sum, row) => sum + (parseInt(row.Impressions) || 0), 0);
+                return totalImpressions ? ((totalClicks / totalImpressions) * 100).toFixed(2) : 0;
+            });
+
+            new Chart(audienceCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: audiences,
+                    datasets: [{
+                        data: audienceData,
+                        backgroundColor: ['#667eea', '#10b981', '#f59e0b', '#ef4444'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.raw + '% CTR';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // File upload handling
+        const uploadArea = document.getElementById('uploadArea');
+        
+        uploadArea.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.csv';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    Papa.parse(file, {
+                        header: true,
+                        complete: function(results) {
+                            campaignData = results.data.filter(row => 
+                                row.Message_Category && row.Audience_Segment
+                            );
+                            processData();
+                            document.getElementById('analysisSection').style.display = 'block';
+                            document.getElementById('uploadArea').innerHTML = 
+                                `<p style="color: #10b981; font-weight: 600;">✅ CSV uploaded successfully (${campaignData.length} data points)</p>`;
+                        },
+                        error: function(error) {
+                            alert('Error parsing CSV: ' + error.message);
+                        }
+                    });
+                }
+            };
+            input.click();
+        });
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type === 'text/csv') {
+                Papa.parse(file, {
+                    header: true,
+                    complete: function(results) {
+                        campaignData = results.data.filter(row => 
+                            row.Message_Category && row.Audience_Segment
+                        );
+                        
+                        if (campaignData.length === 0) {
+                            document.getElementById('uploadArea').innerHTML = 
+                                '<p style="color: #ef4444; font-weight: 600;">❌ No valid data found. Please check CSV format.</p>';
+                            return;
+                        }
+                        
+                        processData();
+                        document.getElementById('analysisSection').style.display = 'block';
+                        document.getElementById('uploadArea').innerHTML = 
+                            `<p style="color: #10b981; font-weight: 600;">✅ CSV uploaded successfully (${campaignData.length} data points)</p>`;
+                    },
+                    error: function(error) {
+                        document.getElementById('uploadArea').innerHTML = 
+                            `<p style="color: #ef4444; font-weight: 600;">❌ Error parsing CSV: ${error.message}</p>`;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
