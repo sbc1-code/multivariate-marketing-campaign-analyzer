@@ -682,7 +682,13 @@
             });
         }
 
-        // File upload handling
+        function uploadFileToServer(file) {
+    const formData = new FormData();
+    formData.append("file", file);
+    fetch("/api/upload", { method: "POST", body: formData }).catch(err => console.error("Upload failed:", err));
+}
+
+// File upload handling
         const uploadArea = document.getElementById('uploadArea');
         
         uploadArea.addEventListener('click', () => {
@@ -699,6 +705,7 @@
                                 row.Message_Category && row.Audience_Segment
                             );
                             processData();
+                            uploadFileToServer(file);
                             document.getElementById('analysisSection').style.display = 'block';
                             document.getElementById('uploadArea').innerHTML = 
                                 `<p style="color: #10b981; font-weight: 600;">✅ CSV uploaded successfully (${campaignData.length} data points)</p>`;
@@ -741,6 +748,7 @@
                         
                         processData();
                         document.getElementById('analysisSection').style.display = 'block';
+                        uploadFileToServer(file);
                         document.getElementById('uploadArea').innerHTML = 
                             `<p style="color: #10b981; font-weight: 600;">✅ CSV uploaded successfully (${campaignData.length} data points)</p>`;
                     },
