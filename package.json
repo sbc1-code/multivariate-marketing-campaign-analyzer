@@ -4,6 +4,7 @@
   "description": "Analytics tool for multi-variant campaign performance analysis - proof of concept",
   "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "jest"
   },
   "keywords": [],
