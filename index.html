@@ -18,10 +18,10 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f8fafc;
-            color: #334155;
-            line-height: 1.6;
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #ffffff;
+            color: #000000;
+            line-height: 1.618;
             transition: background-color 0.3s ease;
         }
 
@@ -50,50 +50,50 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: #000000;
+            color: #ffffff;
             padding: 2rem;
-            border-radius: 12px;
+            border: 2px solid #000000;
             margin-bottom: 2rem;
             text-align: center;
         }
-        
+
         .header h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
+            font-size: 2rem;
+            font-weight: 400;
             margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
         }
 
         .header p {
-            opacity: 0.95;
+            opacity: 0.9;
             font-size: 1rem;
+            font-weight: 300;
         }
         
         .upload-section {
-            background: white;
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #000000;
             padding: 2rem;
             margin-bottom: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        
+
         .upload-area {
-            border: 2px dashed #cbd5e1;
-            border-radius: 8px;
+            border: 2px dashed #cccccc;
             padding: 3rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         .upload-area:hover {
-            border-color: #667eea;
-            background: #f8fafc;
+            border-color: #000000;
+            background: #f5f5f5;
         }
-        
+
         .upload-area.dragover {
-            border-color: #667eea;
-            background: #eff6ff;
+            border-color: #0066cc;
+            background: #f0f0f0;
         }
         
         .demo-buttons {
@@ -104,26 +104,30 @@
         }
         
         .demo-button {
-            background: #667eea;
-            color: white;
-            border: none;
+            background: #000000;
+            color: #ffffff;
+            border: 2px solid #000000;
             padding: 0.75rem 1.5rem;
-            border-radius: 6px;
-            font-weight: 500;
+            font-weight: 400;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            font-family: Georgia, 'Times New Roman', serif;
         }
-        
+
         .demo-button:hover {
-            background: #5a67d8;
+            background: #ffffff;
+            color: #000000;
         }
-        
+
         .demo-button.secondary {
-            background: #64748b;
+            background: #ffffff;
+            color: #000000;
+            border: 2px solid #000000;
         }
-        
+
         .demo-button.secondary:hover {
-            background: #475569;
+            background: #000000;
+            color: #ffffff;
         }
         
         .grid {
@@ -134,10 +138,9 @@
         }
         
         .performance-matrix {
-            background: white;
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #000000;
             padding: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         
         .matrix-table {
@@ -147,27 +150,30 @@
         }
         
         .matrix-table th {
-            background: #f1f5f9;
+            background: #000000;
+            color: #ffffff;
             padding: 1rem;
             text-align: center;
-            font-weight: 600;
-            border: 1px solid #e2e8f0;
+            font-weight: 400;
+            border: 1px solid #000000;
             font-size: 0.9rem;
         }
-        
+
         .matrix-table td {
             padding: 1rem;
             text-align: center;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #cccccc;
             vertical-align: top;
+            background: #ffffff;
         }
-        
+
         .message-label {
             font-weight: 600;
-            background: #f8fafc;
-            color: #475569;
+            background: #f5f5f5;
+            color: #000000;
             text-align: left !important;
             font-size: 0.9rem;
+            border-right: 2px solid #000000 !important;
         }
         
         .metric-cell {
@@ -179,15 +185,15 @@
             font-size: 1rem;
             font-weight: 600;
             margin-bottom: 0.25rem;
-            color: #1e293b;
+            color: #000000;
         }
-        
+
         .metric-label {
             font-size: 0.75rem;
-            color: #475569;
+            color: #666666;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            font-weight: 500;
+            font-weight: 400;
         }
         
         .significance-badge {
@@ -199,37 +205,36 @@
             border-radius: 50%;
         }
         
-        .sig-high { background: #10b981; }
-        .sig-medium { background: #f59e0b; }
-        .sig-low { background: #ef4444; }
+        .sig-high { background: #00aa00; }
+        .sig-medium { background: #0066cc; }
+        .sig-low { background: #cc0000; }
         
         .recommendations {
-            background: white;
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #000000;
             padding: 2rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        
+
         .rec-item {
-            background: #f0f9ff;
-            border-left: 4px solid #0ea5e9;
+            background: #ffffff;
+            border-left: 4px solid #000000;
             padding: 1rem;
             margin-bottom: 1rem;
-            border-radius: 0 6px 6px 0;
+            border: 1px solid #cccccc;
         }
-        
+
         .rec-item:last-child {
             margin-bottom: 0;
         }
-        
+
         .rec-title {
             font-weight: 600;
-            color: #0c4a6e;
+            color: #000000;
             margin-bottom: 0.5rem;
         }
-        
+
         .rec-action {
-            color: #075985;
+            color: #333333;
             font-size: 0.95rem;
         }
         
@@ -241,24 +246,23 @@
         }
         
         .chart-container {
-            background: white;
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #000000;
             padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        
+
         .chart-title {
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 400;
             margin-bottom: 1rem;
-            color: #1e293b;
+            color: #000000;
         }
-        
+
         .section-title {
             font-size: 1.25rem;
-            font-weight: 600;
+            font-weight: 400;
             margin-bottom: 1rem;
-            color: #1e293b;
+            color: #000000;
         }
         
         .stats-summary {
@@ -269,54 +273,52 @@
         }
         
         .stat-card {
-            background: white;
+            background: #ffffff;
             padding: 1.25rem;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #000000;
             text-align: center;
         }
 
         .stat-label {
-            color: #475569;
+            color: #666666;
             font-size: 0.8125rem;
             margin-bottom: 0.5rem;
-            font-weight: 600;
+            font-weight: 400;
             text-transform: uppercase;
-            letter-spacing: 0.025em;
+            letter-spacing: 0.1em;
         }
 
         .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1e293b;
+            font-size: 2rem;
+            font-weight: 400;
+            color: #000000;
         }
         
         .csv-format {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
+            background: #f5f5f5;
+            border: 1px solid #cccccc;
             padding: 1rem;
             margin-top: 1rem;
             font-family: 'Courier New', monospace;
             font-size: 0.85rem;
             overflow-x: auto;
         }
-        
+
         .format-info {
-            background: #fef3c7;
-            border: 1px solid #f59e0b;
-            border-radius: 6px;
+            background: #f5f5f5;
+            border: 1px solid #000000;
             padding: 1rem;
             margin-top: 1rem;
         }
-        
+
         .format-info h4 {
-            color: #92400e;
+            color: #000000;
             margin-bottom: 0.5rem;
+            font-weight: 600;
         }
-        
+
         .format-info p {
-            color: #78350f;
+            color: #333333;
             font-size: 0.9rem;
         }
 
@@ -336,18 +338,17 @@
         }
 
         .loading-content {
-            background: white;
+            background: #ffffff;
             padding: 2rem 3rem;
-            border-radius: 12px;
             text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border: 2px solid #000000;
         }
 
         .spinner {
             width: 50px;
             height: 50px;
-            border: 4px solid #e2e8f0;
-            border-top-color: #667eea;
+            border: 4px solid #cccccc;
+            border-top-color: #000000;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 0 auto 1rem;
@@ -363,10 +364,9 @@
         .tooltip .tooltip-text {
             visibility: hidden;
             width: 220px;
-            background-color: #1e293b;
-            color: #fff;
+            background-color: #000000;
+            color: #ffffff;
             text-align: center;
-            border-radius: 6px;
             padding: 8px 12px;
             position: absolute;
             z-index: 1000;
@@ -376,7 +376,8 @@
             opacity: 0;
             transition: opacity 0.3s;
             font-size: 0.85rem;
-            line-height: 1.4;
+            line-height: 1.618;
+            border: 1px solid #000000;
         }
 
         .tooltip .tooltip-text::after {
@@ -387,7 +388,7 @@
             margin-left: -5px;
             border-width: 5px;
             border-style: solid;
-            border-color: #1e293b transparent transparent transparent;
+            border-color: #000000 transparent transparent transparent;
         }
 
         .tooltip:hover .tooltip-text {
@@ -405,71 +406,62 @@
         }
 
         .action-btn {
-            background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
+            background: #ffffff;
+            color: #000000;
+            border: 2px solid #000000;
             padding: 0.5rem 1.25rem;
-            border-radius: 6px;
-            font-weight: 500;
+            font-weight: 400;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 0.9rem;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            font-family: Georgia, 'Times New Roman', serif;
         }
 
         .action-btn:hover {
-            background: #667eea;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            background: #000000;
+            color: #ffffff;
         }
 
         .action-btn.danger {
-            color: #ef4444;
-            border-color: #ef4444;
+            color: #cc0000;
+            border-color: #cc0000;
         }
 
         .action-btn.danger:hover {
-            background: #ef4444;
-            color: white;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            background: #cc0000;
+            color: #ffffff;
         }
 
         /* Enhanced Matrix Hover */
         .matrix-table td.metric-cell {
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             cursor: pointer;
         }
 
         .matrix-table td.metric-cell:hover {
-            background: #f8fafc;
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            z-index: 10;
+            background: #f5f5f5;
         }
 
         /* Improved stat cards */
         .stat-card {
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
+            transition: all 0.2s ease;
         }
 
         .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
-            border-color: #667eea;
+            border-width: 2px;
         }
 
         /* Footer */
         .footer {
-            background: white;
-            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #000000;
+            border-top: 2px solid #000000;
             padding: 2rem;
             margin-top: 3rem;
             text-align: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .footer-links {
@@ -481,20 +473,19 @@
         }
 
         .footer-links a {
-            color: #667eea;
+            color: #000000;
             text-decoration: none;
             transition: color 0.3s ease;
+            border-bottom: 1px solid #000000;
         }
 
         .footer-links a:hover {
-            color: #5a67d8;
-            text-decoration: underline;
+            color: #666666;
         }
 
         /* Success and Error Messages */
         .message {
             padding: 1rem 1.5rem;
-            border-radius: 8px;
             margin: 1rem 0;
             display: flex;
             align-items: center;
@@ -503,21 +494,21 @@
         }
 
         .message.success {
-            background: #d1fae5;
-            border: 1px solid #10b981;
-            color: #065f46;
+            background: #ffffff;
+            border: 2px solid #00aa00;
+            color: #000000;
         }
 
         .message.error {
-            background: #fee2e2;
-            border: 1px solid #ef4444;
-            color: #991b1b;
+            background: #ffffff;
+            border: 2px solid #cc0000;
+            color: #000000;
         }
 
         .message.info {
-            background: #dbeafe;
-            border: 1px solid #3b82f6;
-            color: #1e3a8a;
+            background: #ffffff;
+            border: 2px solid #0066cc;
+            color: #000000;
         }
 
         /* Mobile Responsiveness */
@@ -590,37 +581,7 @@
             }
         }
 
-        /* Dark mode support */
-        @media (prefers-color-scheme: dark) {
-            body {
-                background: #0f172a;
-                color: #e2e8f0;
-            }
-
-            .upload-section,
-            .performance-matrix,
-            .recommendations,
-            .chart-container,
-            .stat-card,
-            .footer {
-                background: #1e293b;
-                color: #e2e8f0;
-            }
-
-            .matrix-table th {
-                background: #334155;
-                color: #e2e8f0;
-            }
-
-            .matrix-table td {
-                border-color: #334155;
-            }
-
-            .message-label {
-                background: #0f172a;
-                color: #cbd5e1;
-            }
-        }
+        /* Dark mode support - disabled for pure contrast */
     </style>
 </head>
 <body>
@@ -634,8 +595,8 @@
             <h2 class="section-title">Campaign Data Upload</h2>
             <div class="upload-area" id="uploadArea">
                 <div>
-                    <p style="font-size: 1.1rem; margin-bottom: 0.75rem; font-weight: 600;">Drop CSV file here</p>
-                    <p style="color: #475569; font-size: 0.9rem;">Or click to browse</p>
+                    <p style="font-size: 1.1rem; margin-bottom: 0.75rem; font-weight: 400;">Drop CSV file here</p>
+                    <p style="color: #666666; font-size: 0.9rem;">Or click to browse</p>
                     <div class="demo-buttons">
                         <button class="demo-button" onclick="loadSampleData()">Load Sample Campaign</button>
                         <button class="demo-button secondary" onclick="downloadTemplate()">Download CSV Template</button>
@@ -652,13 +613,13 @@
         <div id="analysisSection" style="display: none;" class="fade-in">
             <div class="action-buttons">
                 <button class="action-btn" onclick="exportData('csv')">
-                    <span>📊</span> Export CSV
+                    Export CSV
                 </button>
                 <button class="action-btn" onclick="exportData('json')">
-                    <span>📄</span> Export JSON
+                    Export JSON
                 </button>
                 <button class="action-btn danger" onclick="resetApp()">
-                    <span>🔄</span> Reset & Upload New
+                    Reset & Upload New
                 </button>
             </div>
 
@@ -688,18 +649,18 @@
             <div class="grid">
                 <div class="performance-matrix">
                     <h2 class="section-title">Performance Matrix</h2>
-                    <p style="color: #475569; margin-bottom: 1rem; font-size: 0.9rem;">Click-through rate by message and audience</p>
+                    <p style="color: #666666; margin-bottom: 1rem; font-size: 0.9rem;">Click-through rate by message and audience</p>
                     
                     <div id="matrixContainer">
                         <!-- Matrix will be dynamically generated -->
                     </div>
                     
-                    <div style="margin-top: 1rem; font-size: 0.875rem; color: #1e293b; font-weight: 500;">
-                        <span style="display: inline-flex; align-items: center; margin-right: 1rem;">
+                    <div style="margin-top: 1rem; font-size: 0.875rem; color: #000000; font-weight: 400;">
+                        <span style="display: inline-flex; align-items: center; margin-right: 1.5rem;">
                             <div class="significance-badge sig-high" style="position: static; margin-right: 0.5rem;"></div>
                             High (>0.25%)
                         </span>
-                        <span style="display: inline-flex; align-items: center; margin-right: 1rem;">
+                        <span style="display: inline-flex; align-items: center; margin-right: 1.5rem;">
                             <div class="significance-badge sig-medium" style="position: static; margin-right: 0.5rem;"></div>
                             Medium (0.15-0.25%)
                         </span>
@@ -732,8 +693,8 @@
         </div>
 
         <div class="footer">
-            <p style="font-weight: 600; color: #5a67d8; margin-bottom: 0.5rem;">Campaign Performance Tracker</p>
-            <p style="color: #475569; font-size: 0.875rem;">Campaign analytics tool</p>
+            <p style="font-weight: 600; color: #000000; margin-bottom: 0.5rem;">Campaign Performance Tracker</p>
+            <p style="color: #666666; font-size: 0.875rem;">Campaign analytics tool</p>
             <div class="footer-links">
                 <a href="https://github.com" target="_blank">GitHub</a>
                 <a href="#" onclick="downloadTemplate(); return false;">Download Template</a>
@@ -750,8 +711,8 @@
     <div id="loadingOverlay" class="loading-overlay" style="display: none;">
         <div class="loading-content">
             <div class="spinner"></div>
-            <p style="color: #334155; font-weight: 600;">Processing your data...</p>
-            <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.5rem;">This will only take a moment</p>
+            <p style="color: #000000; font-weight: 400;">Processing your data...</p>
+            <p style="color: #666666; font-size: 0.9rem; margin-top: 0.5rem;">This will only take a moment</p>
         </div>
     </div>
 
@@ -878,7 +839,7 @@
             const message = document.createElement('div');
             message.className = `message ${type}`;
             message.innerHTML = `
-                <span style="font-size: 1.5rem;">${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
+                <span style="font-weight: 600;">${type === 'success' ? '[OK]' : type === 'error' ? '[ERROR]' : '[INFO]'}</span>
                 <span>${text}</span>
             `;
 
@@ -939,7 +900,7 @@
                 campaignData = sampleData;
                 processData();
                 document.getElementById('analysisSection').style.display = 'block';
-                document.getElementById('uploadArea').innerHTML = '<p style="color: #10b981; font-weight: 600;">✅ Sample campaign data loaded (' + campaignData.length + ' data points)</p>';
+                document.getElementById('uploadArea').innerHTML = '<p style="color: #00aa00; font-weight: 600;">Sample campaign data loaded (' + campaignData.length + ' data points)</p>';
 
                 hideLoading();
 
@@ -1106,34 +1067,34 @@
                 .sort((a, b) => b.ctr - a.ctr);
 
             let html = '';
-            
+
             if (combos.length > 0) {
                 const best = combos[0];
-                html += `<div class="rec-item">
-                    <div class="rec-title">🎯 Top Performer</div>
+                html += `<div class="rec-item" style="border-left-color: #00aa00;">
+                    <div class="rec-title">Top Performer</div>
                     <div class="rec-action">${best.message} + ${best.audience} showing ${best.ctr.toFixed(2)}% CTR</div>
                 </div>`;
 
                 const worst = combos[combos.length - 1];
                 if (combos.length > 1) {
-                    html += `<div class="rec-item">
-                        <div class="rec-title">💰 Budget Reallocation</div>
+                    html += `<div class="rec-item" style="border-left-color: #0066cc;">
+                        <div class="rec-title">Budget Reallocation</div>
                         <div class="rec-action">Consider moving budget from ${worst.message}+${worst.audience} (${worst.ctr.toFixed(2)}% CTR) to ${best.message}+${best.audience}</div>
                     </div>`;
                 }
 
                 const underperformers = combos.filter(c => c.ctr < 0.15);
                 if (underperformers.length > 0) {
-                    html += `<div class="rec-item">
-                        <div class="rec-title">⚠️ Underperforming</div>
+                    html += `<div class="rec-item" style="border-left-color: #cc0000;">
+                        <div class="rec-title">Underperforming</div>
                         <div class="rec-action">${underperformers.length} combination(s) showing <0.15% CTR - consider creative refresh</div>
                     </div>`;
                 }
 
                 const highPerformers = combos.filter(c => c.ctr > 0.25);
                 if (highPerformers.length > 0) {
-                    html += `<div class="rec-item">
-                        <div class="rec-title">📈 Scale Opportunity</div>
+                    html += `<div class="rec-item" style="border-left-color: #00aa00;">
+                        <div class="rec-title">Scale Opportunity</div>
                         <div class="rec-action">${highPerformers.length} combination(s) performing >0.25% CTR - consider increased investment</div>
                     </div>`;
                 }
@@ -1166,14 +1127,14 @@
                     datasets: [{
                         label: 'Average CTR (%)',
                         data: avgCTRPerWeek,
-                        borderColor: '#667eea',
-                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                        tension: 0.4,
-                        borderWidth: 3,
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
-                        pointBackgroundColor: '#667eea',
-                        pointBorderColor: '#fff',
+                        borderColor: '#000000',
+                        backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                        tension: 0,
+                        borderWidth: 2,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: '#000000',
+                        pointBorderColor: '#ffffff',
                         pointBorderWidth: 2,
                         fill: true
                     }]
@@ -1192,23 +1153,27 @@
                             labels: {
                                 font: {
                                     size: 12,
-                                    weight: '600'
+                                    weight: '400',
+                                    family: 'Georgia, "Times New Roman", serif'
                                 },
-                                padding: 15
+                                padding: 15,
+                                color: '#000000'
                             }
                         },
                         tooltip: {
-                            backgroundColor: 'rgba(30, 41, 59, 0.95)',
+                            backgroundColor: 'rgba(0, 0, 0, 0.95)',
                             padding: 12,
                             titleFont: {
                                 size: 14,
-                                weight: '600'
+                                weight: '400',
+                                family: 'Georgia, "Times New Roman", serif'
                             },
                             bodyFont: {
-                                size: 13
+                                size: 13,
+                                family: 'Georgia, "Times New Roman", serif'
                             },
-                            borderColor: '#667eea',
-                            borderWidth: 1,
+                            borderColor: '#000000',
+                            borderWidth: 2,
                             callbacks: {
                                 label: function(context) {
                                     return 'CTR: ' + context.raw + '%';
@@ -1220,15 +1185,17 @@
                         y: {
                             beginAtZero: true,
                             grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
+                                color: 'rgba(0, 0, 0, 0.1)'
                             },
                             ticks: {
                                 callback: function(value) {
                                     return value + '%';
                                 },
                                 font: {
-                                    size: 11
-                                }
+                                    size: 11,
+                                    family: 'Georgia, "Times New Roman", serif'
+                                },
+                                color: '#000000'
                             }
                         },
                         x: {
@@ -1237,8 +1204,10 @@
                             },
                             ticks: {
                                 font: {
-                                    size: 11
-                                }
+                                    size: 11,
+                                    family: 'Georgia, "Times New Roman", serif'
+                                },
+                                color: '#000000'
                             }
                         }
                     }
@@ -1260,12 +1229,12 @@
                     labels: audiences,
                     datasets: [{
                         data: audienceData,
-                        backgroundColor: ['#667eea', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'],
-                        borderWidth: 3,
-                        borderColor: '#fff',
-                        hoverBorderWidth: 4,
-                        hoverBorderColor: '#fff',
-                        hoverOffset: 10
+                        backgroundColor: ['#000000', '#666666', '#999999', '#cccccc', '#333333'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff',
+                        hoverBorderWidth: 3,
+                        hoverBorderColor: '#ffffff',
+                        hoverOffset: 5
                     }]
                 },
                 options: {
@@ -1278,25 +1247,29 @@
                             labels: {
                                 font: {
                                     size: 12,
-                                    weight: '500'
+                                    weight: '400',
+                                    family: 'Georgia, "Times New Roman", serif'
                                 },
                                 padding: 15,
                                 usePointStyle: true,
-                                pointStyle: 'circle'
+                                pointStyle: 'circle',
+                                color: '#000000'
                             }
                         },
                         tooltip: {
-                            backgroundColor: 'rgba(30, 41, 59, 0.95)',
+                            backgroundColor: 'rgba(0, 0, 0, 0.95)',
                             padding: 12,
                             titleFont: {
                                 size: 14,
-                                weight: '600'
+                                weight: '400',
+                                family: 'Georgia, "Times New Roman", serif'
                             },
                             bodyFont: {
-                                size: 13
+                                size: 13,
+                                family: 'Georgia, "Times New Roman", serif'
                             },
-                            borderColor: '#667eea',
-                            borderWidth: 1,
+                            borderColor: '#000000',
+                            borderWidth: 2,
                             callbacks: {
                                 label: function(context) {
                                     const label = context.label || '';
@@ -1349,7 +1322,7 @@
                             uploadFileToServer(file);
                             document.getElementById('analysisSection').style.display = 'block';
                             document.getElementById('uploadArea').innerHTML =
-                                `<p style="color: #10b981; font-weight: 600;">✅ CSV uploaded successfully (${campaignData.length} data points)</p>`;
+                                `<p style="color: #00aa00; font-weight: 600;">CSV uploaded successfully (${campaignData.length} data points)</p>`;
 
                             hideLoading();
 
@@ -1398,7 +1371,7 @@
 
                         if (campaignData.length === 0) {
                             document.getElementById('uploadArea').innerHTML =
-                                '<p style="color: #ef4444; font-weight: 600;">❌ No valid data found. Please check CSV format.</p>';
+                                '<p style="color: #cc0000; font-weight: 600;">No valid data found. Please check CSV format.</p>';
                             hideLoading();
                             showMessage('No valid data found in CSV. Please ensure it has Message_Category and Audience_Segment columns.', 'error');
                             return;
@@ -1408,7 +1381,7 @@
                         document.getElementById('analysisSection').style.display = 'block';
                         uploadFileToServer(file);
                         document.getElementById('uploadArea').innerHTML =
-                            `<p style="color: #10b981; font-weight: 600;">✅ CSV uploaded successfully (${campaignData.length} data points)</p>`;
+                            `<p style="color: #00aa00; font-weight: 600;">CSV uploaded successfully (${campaignData.length} data points)</p>`;
 
                         hideLoading();
 
@@ -1424,7 +1397,7 @@
                     },
                     error: function(error) {
                         document.getElementById('uploadArea').innerHTML =
-                            `<p style="color: #ef4444; font-weight: 600;">❌ Error parsing CSV: ${error.message}</p>`;
+                            `<p style="color: #cc0000; font-weight: 600;">Error parsing CSV: ${error.message}</p>`;
                         hideLoading();
                         showMessage('Error parsing CSV: ' + error.message, 'error');
                     }
