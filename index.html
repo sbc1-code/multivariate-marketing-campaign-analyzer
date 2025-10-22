@@ -59,14 +59,14 @@
         }
         
         .header h1 {
-            font-size: 2rem;
+            font-size: 1.75rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
-        
+
         .header p {
-            opacity: 0.9;
-            font-size: 1.1rem;
+            opacity: 0.95;
+            font-size: 1rem;
         }
         
         .upload-section {
@@ -176,16 +176,18 @@
         }
         
         .metric-value {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             margin-bottom: 0.25rem;
+            color: #1e293b;
         }
         
         .metric-label {
             font-size: 0.75rem;
-            color: #64748b;
+            color: #475569;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            font-weight: 500;
         }
         
         .significance-badge {
@@ -268,22 +270,25 @@
         
         .stat-card {
             background: white;
-            padding: 1.5rem;
+            padding: 1.25rem;
             border-radius: 8px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             text-align: center;
         }
-        
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #667eea;
-        }
-        
+
         .stat-label {
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
+            color: #475569;
+            font-size: 0.8125rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
         }
         
         .csv-format {
@@ -621,19 +626,16 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 Campaign Performance Tracker</h1>
-            <p>Analyze message effectiveness across audience segments with statistical rigor</p>
-            <div style="background: rgba(255,255,255,0.2); border-radius: 6px; padding: 1rem; margin-top: 1rem; font-size: 0.9rem;">
-                <strong>📋 Concept Demo:</strong> This is a functional prototype demonstrating core analytics capabilities. A production version would include advanced statistical testing, real-time data integration, and enterprise security features.
-            </div>
+            <h1>Campaign Performance Tracker</h1>
+            <p>Analyze campaign effectiveness by message and audience</p>
         </div>
 
         <div class="upload-section">
             <h2 class="section-title">Campaign Data Upload</h2>
             <div class="upload-area" id="uploadArea">
                 <div>
-                    <p style="font-size: 1.2rem; margin-bottom: 1rem;">📈 Drop your campaign CSV file here</p>
-                    <p style="color: #64748b;">Or click to browse files</p>
+                    <p style="font-size: 1.1rem; margin-bottom: 0.75rem; font-weight: 600;">Drop CSV file here</p>
+                    <p style="color: #475569; font-size: 0.9rem;">Or click to browse</p>
                     <div class="demo-buttons">
                         <button class="demo-button" onclick="loadSampleData()">Load Sample Campaign</button>
                         <button class="demo-button secondary" onclick="downloadTemplate()">Download CSV Template</button>
@@ -642,8 +644,8 @@
             </div>
             
             <div class="format-info">
-                <h4>📋 Smart CSV Processing</h4>
-                <p>Upload any campaign CSV - the tool will automatically detect and map your columns. Works with most ad platform exports (Google Ads, Facebook, etc.)</p>
+                <h4>CSV Format</h4>
+                <p>Upload campaign data CSV. Required columns: Message_Category, Audience_Segment, Impressions, Clicks, Cost</p>
             </div>
         </div>
 
@@ -662,54 +664,54 @@
 
             <div class="stats-summary">
                 <div class="stat-card tooltip">
+                    <div class="stat-label">Impressions</div>
                     <div class="stat-value" id="totalImpressions">-</div>
-                    <div class="stat-label">Total Impressions</div>
-                    <span class="tooltip-text">Total number of times your ads were displayed across all campaigns</span>
+                    <span class="tooltip-text">Total ad views across all campaigns</span>
                 </div>
                 <div class="stat-card tooltip">
+                    <div class="stat-label">Click Rate</div>
                     <div class="stat-value" id="avgCTR">-</div>
-                    <div class="stat-label">Average CTR</div>
-                    <span class="tooltip-text">Click-Through Rate: Percentage of people who clicked your ad after seeing it</span>
+                    <span class="tooltip-text">Average CTR (Click-Through Rate)</span>
                 </div>
                 <div class="stat-card tooltip">
+                    <div class="stat-label">Top Performers</div>
                     <div class="stat-value" id="bestCombo">-</div>
-                    <div class="stat-label">High Performers</div>
-                    <span class="tooltip-text">Number of message-audience combinations with CTR above 0.2%</span>
+                    <span class="tooltip-text">Campaigns with CTR >0.2%</span>
                 </div>
                 <div class="stat-card tooltip">
+                    <div class="stat-label">Cost Per Click</div>
                     <div class="stat-value" id="costEfficiency">-</div>
-                    <div class="stat-label">Avg Cost per Click</div>
-                    <span class="tooltip-text">Average amount spent for each click on your ads</span>
+                    <span class="tooltip-text">Average spend per click</span>
                 </div>
             </div>
 
             <div class="grid">
                 <div class="performance-matrix">
                     <h2 class="section-title">Performance Matrix</h2>
-                    <p style="color: #64748b; margin-bottom: 1rem;">CTR performance by message category and audience segment</p>
+                    <p style="color: #475569; margin-bottom: 1rem; font-size: 0.9rem;">Click-through rate by message and audience</p>
                     
                     <div id="matrixContainer">
                         <!-- Matrix will be dynamically generated -->
                     </div>
                     
-                    <div style="margin-top: 1rem; font-size: 0.9rem; color: #64748b;">
+                    <div style="margin-top: 1rem; font-size: 0.875rem; color: #1e293b; font-weight: 500;">
                         <span style="display: inline-flex; align-items: center; margin-right: 1rem;">
                             <div class="significance-badge sig-high" style="position: static; margin-right: 0.5rem;"></div>
-                            High Performance
+                            High (>0.25%)
                         </span>
                         <span style="display: inline-flex; align-items: center; margin-right: 1rem;">
                             <div class="significance-badge sig-medium" style="position: static; margin-right: 0.5rem;"></div>
-                            Medium Performance
+                            Medium (0.15-0.25%)
                         </span>
                         <span style="display: inline-flex; align-items: center;">
                             <div class="significance-badge sig-low" style="position: static; margin-right: 0.5rem;"></div>
-                            Low Performance
+                            Low (<0.15%)
                         </span>
                     </div>
                 </div>
 
                 <div class="recommendations">
-                    <h2 class="section-title">Smart Recommendations</h2>
+                    <h2 class="section-title">Recommendations</h2>
                     <div id="recommendationsContainer">
                         <!-- Recommendations will be dynamically generated -->
                     </div>
@@ -730,16 +732,16 @@
         </div>
 
         <div class="footer">
-            <p style="font-weight: 600; color: #667eea; margin-bottom: 0.5rem;">Campaign Performance Tracker</p>
-            <p style="color: #64748b; font-size: 0.9rem;">Built with Chart.js, PapaParse, and modern web technologies</p>
+            <p style="font-weight: 600; color: #5a67d8; margin-bottom: 0.5rem;">Campaign Performance Tracker</p>
+            <p style="color: #475569; font-size: 0.875rem;">Campaign analytics tool</p>
             <div class="footer-links">
                 <a href="https://github.com" target="_blank">GitHub</a>
                 <a href="#" onclick="downloadTemplate(); return false;">Download Template</a>
                 <a href="#" onclick="loadSampleData(); return false;">Load Sample Data</a>
                 <a href="mailto:support@example.com">Support</a>
             </div>
-            <p style="color: #94a3b8; font-size: 0.8rem; margin-top: 1rem;">
-                &copy; 2025 Marketing Analytics Suite | Version 2.0
+            <p style="color: #64748b; font-size: 0.8125rem; margin-top: 1rem;">
+                Version 2.1 | 2025
             </p>
         </div>
     </div>
@@ -851,8 +853,8 @@
                 // Reset upload area
                 document.getElementById('uploadArea').innerHTML = `
                     <div>
-                        <p style="font-size: 1.2rem; margin-bottom: 1rem;">📈 Drop your campaign CSV file here</p>
-                        <p style="color: #64748b;">Or click to browse files</p>
+                        <p style="font-size: 1.1rem; margin-bottom: 0.75rem; font-weight: 600;">Drop CSV file here</p>
+                        <p style="color: #475569; font-size: 0.9rem;">Or click to browse</p>
                         <div class="demo-buttons">
                             <button class="demo-button" onclick="loadSampleData()">Load Sample Campaign</button>
                             <button class="demo-button secondary" onclick="downloadTemplate()">Download CSV Template</button>
@@ -890,22 +892,41 @@
             }, 5000);
         }
 
-        // Sample data for demonstration
+        // Sample campaign data - organized by message type and audience
         const sampleData = [
+            // SUPERIOR TASTE MESSAGE
+            // High-performing with Moms 25-45 (CTR improves weekly: 0.21% → 0.35%)
             {Message_Category: "Superior Taste", Audience_Segment: "Moms 25-45", Week: "1", Impressions: "45000", Clicks: "95", CTR: "0.21%", Conversions: "19", Conversion_Rate: "20.0%", Cost: "285", CPC: "3.00"},
             {Message_Category: "Superior Taste", Audience_Segment: "Moms 25-45", Week: "2", Impressions: "48000", Clicks: "134", CTR: "0.28%", Conversions: "28", Conversion_Rate: "20.9%", Cost: "315", CPC: "2.35"},
             {Message_Category: "Superior Taste", Audience_Segment: "Moms 25-45", Week: "3", Impressions: "52000", Clicks: "182", CTR: "0.35%", Conversions: "38", Conversion_Rate: "20.9%", Cost: "340", CPC: "1.87"},
+
+            // Lower performance with Budget-Conscious (CTR: 0.12-0.15%)
             {Message_Category: "Superior Taste", Audience_Segment: "Budget-Conscious", Week: "1", Impressions: "32000", Clicks: "38", CTR: "0.12%", Conversions: "6", Conversion_Rate: "15.8%", Cost: "190", CPC: "5.00"},
             {Message_Category: "Superior Taste", Audience_Segment: "Budget-Conscious", Week: "2", Impressions: "34000", Clicks: "51", CTR: "0.15%", Conversions: "9", Conversion_Rate: "17.6%", Cost: "210", CPC: "4.12"},
+
+            // Moderate performance with Health-Conscious (CTR: 0.18-0.25%)
             {Message_Category: "Superior Taste", Audience_Segment: "Health-Conscious", Week: "1", Impressions: "38000", Clicks: "68", CTR: "0.18%", Conversions: "12", Conversion_Rate: "17.6%", Cost: "255", CPC: "3.75"},
             {Message_Category: "Superior Taste", Audience_Segment: "Health-Conscious", Week: "2", Impressions: "41000", Clicks: "103", CTR: "0.25%", Conversions: "21", Conversion_Rate: "20.4%", Cost: "280", CPC: "2.72"},
+
+            // FAMILY TIME MESSAGE
+            // Strong with Moms 25-45 (CTR: 0.21-0.28%)
             {Message_Category: "Family Time", Audience_Segment: "Moms 25-45", Week: "1", Impressions: "46000", Clicks: "97", CTR: "0.21%", Conversions: "20", Conversion_Rate: "20.6%", Cost: "290", CPC: "2.99"},
             {Message_Category: "Family Time", Audience_Segment: "Moms 25-45", Week: "2", Impressions: "49000", Clicks: "137", CTR: "0.28%", Conversions: "29", Conversion_Rate: "21.2%", Cost: "320", CPC: "2.34"},
+
+            // Poor fit for Budget-Conscious (CTR: 0.10%)
             {Message_Category: "Family Time", Audience_Segment: "Budget-Conscious", Week: "1", Impressions: "31000", Clicks: "31", CTR: "0.10%", Conversions: "4", Conversion_Rate: "12.9%", Cost: "180", CPC: "5.81"},
+
+            // Below average with Health-Conscious (CTR: 0.14%)
             {Message_Category: "Family Time", Audience_Segment: "Health-Conscious", Week: "1", Impressions: "37000", Clicks: "52", CTR: "0.14%", Conversions: "8", Conversion_Rate: "15.4%", Cost: "240", CPC: "4.62"},
+
+            // NUMBER OF OPTIONS MESSAGE
+            // Moderate across segments (CTR: 0.15-0.20%)
             {Message_Category: "Number of Options", Audience_Segment: "Moms 25-45", Week: "1", Impressions: "44000", Clicks: "66", CTR: "0.15%", Conversions: "11", Conversion_Rate: "16.7%", Cost: "265", CPC: "4.02"},
             {Message_Category: "Number of Options", Audience_Segment: "Budget-Conscious", Week: "1", Impressions: "33000", Clicks: "50", CTR: "0.15%", Conversions: "8", Conversion_Rate: "16.0%", Cost: "220", CPC: "4.40"},
             {Message_Category: "Number of Options", Audience_Segment: "Budget-Conscious", Week: "2", Impressions: "35000", Clicks: "70", CTR: "0.20%", Conversions: "12", Conversion_Rate: "17.1%", Cost: "250", CPC: "3.57"},
+
+            // INFLUENCER SUPPORTED MESSAGE
+            // Good match with Health-Conscious (CTR: 0.20-0.24%)
             {Message_Category: "Influencer Supported", Audience_Segment: "Health-Conscious", Week: "1", Impressions: "35000", Clicks: "70", CTR: "0.20%", Conversions: "12", Conversion_Rate: "17.1%", Cost: "280", CPC: "4.00"},
             {Message_Category: "Influencer Supported", Audience_Segment: "Health-Conscious", Week: "2", Impressions: "37000", Clicks: "89", CTR: "0.24%", Conversions: "16", Conversion_Rate: "18.0%", Cost: "310", CPC: "3.48"}
         ];
