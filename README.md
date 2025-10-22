@@ -2,9 +2,20 @@
 
 Analytics tool for multi-variant campaign performance analysis.
 
-This project now includes a simple Node.js/Express backend that serves the static
-`index.html` page and provides a basic API for CSV uploads. Uploaded files are
-immediately removed after processing to avoid cluttering the `uploads` folder.
+## Live Demo
+
+The application is deployed on GitHub Pages and can be accessed at:
+**https://sbc1-code.github.io/multivariate-marketing-campaign-analyzer/**
+
+The live version is a fully functional static site that runs entirely in your browser - no backend required!
+
+## About This Project
+
+This project includes:
+- **Static Web App** (`index.html`): Fully client-side analytics tool that works in any browser
+- **Optional Node.js Backend** (`server.js`): Provides a local development server with CSV upload API
+
+All CSV parsing and analysis happens client-side using PapaParse and Chart.js, so the app works perfectly as a static site on GitHub Pages.
 
 The server port can be customised with the `PORT` environment variable and the
 upload directory via `UPLOAD_DIR`.
@@ -39,3 +50,24 @@ using `curl`:
 ```bash
 curl -F "file=@path/to/data.csv" http://localhost:3000/api/upload
 ```
+
+## GitHub Pages Deployment
+
+The application is automatically deployed to GitHub Pages using GitHub Actions.
+
+### How It Works
+
+1. Any push to the `main` or `master` branch triggers the deployment workflow
+2. GitHub Actions uploads the static files to GitHub Pages
+3. The site becomes available at: https://sbc1-code.github.io/multivariate-marketing-campaign-analyzer/
+
+### Manual Deployment
+
+The deployment workflow can also be triggered manually from the Actions tab in GitHub.
+
+### Configuration
+
+To enable GitHub Pages for your fork:
+1. Go to repository Settings > Pages
+2. Under "Build and deployment", select "GitHub Actions" as the source
+3. The next push to main/master will automatically deploy the site
