@@ -12,12 +12,35 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: #f8fafc;
             color: #334155;
             line-height: 1.6;
+            transition: background-color 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
         }
         
         .container {
@@ -291,6 +314,308 @@
             color: #78350f;
             font-size: 0.9rem;
         }
+
+        /* Loading Spinner */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            backdrop-filter: blur(4px);
+        }
+
+        .loading-content {
+            background: white;
+            padding: 2rem 3rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e2e8f0;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 220px;
+            background-color: #1e293b;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 12px;
+            position: absolute;
+            z-index: 1000;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -110px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .tooltip .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Export and Reset Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .action-btn.danger {
+            color: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .action-btn.danger:hover {
+            background: #ef4444;
+            color: white;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Enhanced Matrix Hover */
+        .matrix-table td.metric-cell {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .matrix-table td.metric-cell:hover {
+            background: #f8fafc;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        /* Improved stat cards */
+        .stat-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #5a67d8;
+            text-decoration: underline;
+        }
+
+        /* Success and Error Messages */
+        .message {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .message.success {
+            background: #d1fae5;
+            border: 1px solid #10b981;
+            color: #065f46;
+        }
+
+        .message.error {
+            background: #fee2e2;
+            border: 1px solid #ef4444;
+            color: #991b1b;
+        }
+
+        .message.info {
+            background: #dbeafe;
+            border: 1px solid #3b82f6;
+            color: #1e3a8a;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 1024px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .demo-buttons {
+                flex-direction: column;
+            }
+
+            .demo-button {
+                width: 100%;
+            }
+
+            .stats-summary {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.75rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            .matrix-table {
+                font-size: 0.85rem;
+            }
+
+            .matrix-table th,
+            .matrix-table td {
+                padding: 0.5rem;
+            }
+
+            .action-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: #0f172a;
+                color: #e2e8f0;
+            }
+
+            .upload-section,
+            .performance-matrix,
+            .recommendations,
+            .chart-container,
+            .stat-card,
+            .footer {
+                background: #1e293b;
+                color: #e2e8f0;
+            }
+
+            .matrix-table th {
+                background: #334155;
+                color: #e2e8f0;
+            }
+
+            .matrix-table td {
+                border-color: #334155;
+            }
+
+            .message-label {
+                background: #0f172a;
+                color: #cbd5e1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -322,23 +647,39 @@
             </div>
         </div>
 
-        <div id="analysisSection" style="display: none;">
+        <div id="analysisSection" style="display: none;" class="fade-in">
+            <div class="action-buttons">
+                <button class="action-btn" onclick="exportData('csv')">
+                    <span>📊</span> Export CSV
+                </button>
+                <button class="action-btn" onclick="exportData('json')">
+                    <span>📄</span> Export JSON
+                </button>
+                <button class="action-btn danger" onclick="resetApp()">
+                    <span>🔄</span> Reset & Upload New
+                </button>
+            </div>
+
             <div class="stats-summary">
-                <div class="stat-card">
+                <div class="stat-card tooltip">
                     <div class="stat-value" id="totalImpressions">-</div>
                     <div class="stat-label">Total Impressions</div>
+                    <span class="tooltip-text">Total number of times your ads were displayed across all campaigns</span>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card tooltip">
                     <div class="stat-value" id="avgCTR">-</div>
                     <div class="stat-label">Average CTR</div>
+                    <span class="tooltip-text">Click-Through Rate: Percentage of people who clicked your ad after seeing it</span>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card tooltip">
                     <div class="stat-value" id="bestCombo">-</div>
                     <div class="stat-label">High Performers</div>
+                    <span class="tooltip-text">Number of message-audience combinations with CTR above 0.2%</span>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card tooltip">
                     <div class="stat-value" id="costEfficiency">-</div>
                     <div class="stat-label">Avg Cost per Click</div>
+                    <span class="tooltip-text">Average amount spent for each click on your ads</span>
                 </div>
             </div>
 
@@ -387,11 +728,167 @@
                 </div>
             </div>
         </div>
+
+        <div class="footer">
+            <p style="font-weight: 600; color: #667eea; margin-bottom: 0.5rem;">Campaign Performance Tracker</p>
+            <p style="color: #64748b; font-size: 0.9rem;">Built with Chart.js, PapaParse, and modern web technologies</p>
+            <div class="footer-links">
+                <a href="https://github.com" target="_blank">GitHub</a>
+                <a href="#" onclick="downloadTemplate(); return false;">Download Template</a>
+                <a href="#" onclick="loadSampleData(); return false;">Load Sample Data</a>
+                <a href="mailto:support@example.com">Support</a>
+            </div>
+            <p style="color: #94a3b8; font-size: 0.8rem; margin-top: 1rem;">
+                &copy; 2025 Marketing Analytics Suite | Version 2.0
+            </p>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p style="color: #334155; font-weight: 600;">Processing your data...</p>
+            <p style="color: #64748b; font-size: 0.9rem; margin-top: 0.5rem;">This will only take a moment</p>
+        </div>
     </div>
 
     <script>
         let campaignData = [];
         let processedData = {};
+        let trendChart = null;
+        let audienceChart = null;
+
+        // Loading overlay functions
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+
+        // Export data functions
+        function exportData(format) {
+            if (format === 'csv') {
+                exportCSV();
+            } else if (format === 'json') {
+                exportJSON();
+            }
+        }
+
+        function exportCSV() {
+            if (!campaignData || campaignData.length === 0) {
+                showMessage('No data to export', 'error');
+                return;
+            }
+
+            // Create CSV with analysis results
+            let csv = 'Message_Category,Audience_Segment,Total_Impressions,Total_Clicks,CTR,Total_Cost,CPC\n';
+
+            Object.entries(processedData.combinations).forEach(([key, data]) => {
+                const ctr = ((data.clicks / data.impressions) * 100).toFixed(2);
+                const cpc = (data.cost / data.clicks).toFixed(2);
+                csv += `${data.message},${data.audience},${data.impressions},${data.clicks},${ctr}%,${data.cost.toFixed(2)},$${cpc}\n`;
+            });
+
+            downloadFile(csv, 'campaign-analysis.csv', 'text/csv');
+            showMessage('CSV exported successfully!', 'success');
+        }
+
+        function exportJSON() {
+            if (!processedData || Object.keys(processedData).length === 0) {
+                showMessage('No data to export', 'error');
+                return;
+            }
+
+            const exportData = {
+                timestamp: new Date().toISOString(),
+                summary: {
+                    totalImpressions: document.getElementById('totalImpressions').textContent,
+                    avgCTR: document.getElementById('avgCTR').textContent,
+                    highPerformers: document.getElementById('bestCombo').textContent,
+                    avgCPC: document.getElementById('costEfficiency').textContent
+                },
+                combinations: processedData.combinations,
+                weeklyTrends: processedData.weeklyTrends
+            };
+
+            const json = JSON.stringify(exportData, null, 2);
+            downloadFile(json, 'campaign-analysis.json', 'application/json');
+            showMessage('JSON exported successfully!', 'success');
+        }
+
+        function downloadFile(content, filename, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Reset application
+        function resetApp() {
+            if (confirm('Are you sure you want to reset? This will clear all current data.')) {
+                campaignData = [];
+                processedData = {};
+
+                // Destroy charts if they exist
+                if (trendChart) {
+                    trendChart.destroy();
+                    trendChart = null;
+                }
+                if (audienceChart) {
+                    audienceChart.destroy();
+                    audienceChart = null;
+                }
+
+                // Hide analysis section
+                document.getElementById('analysisSection').style.display = 'none';
+
+                // Reset upload area
+                document.getElementById('uploadArea').innerHTML = `
+                    <div>
+                        <p style="font-size: 1.2rem; margin-bottom: 1rem;">📈 Drop your campaign CSV file here</p>
+                        <p style="color: #64748b;">Or click to browse files</p>
+                        <div class="demo-buttons">
+                            <button class="demo-button" onclick="loadSampleData()">Load Sample Campaign</button>
+                            <button class="demo-button secondary" onclick="downloadTemplate()">Download CSV Template</button>
+                        </div>
+                    </div>
+                `;
+
+                // Smooth scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                showMessage('Application reset successfully. Upload new data to begin.', 'info');
+            }
+        }
+
+        // Show user-friendly messages
+        function showMessage(text, type = 'info') {
+            // Remove any existing messages
+            const existing = document.querySelector('.message');
+            if (existing) existing.remove();
+
+            const message = document.createElement('div');
+            message.className = `message ${type}`;
+            message.innerHTML = `
+                <span style="font-size: 1.5rem;">${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
+                <span>${text}</span>
+            `;
+
+            const uploadSection = document.querySelector('.upload-section');
+            uploadSection.insertAdjacentElement('afterend', message);
+
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                message.style.opacity = '0';
+                setTimeout(() => message.remove(), 300);
+            }, 5000);
+        }
 
         // Sample data for demonstration
         const sampleData = [
@@ -414,10 +911,27 @@
         ];
 
         function loadSampleData() {
-            campaignData = sampleData;
-            processData();
-            document.getElementById('analysisSection').style.display = 'block';
-            document.getElementById('uploadArea').innerHTML = '<p style="color: #10b981; font-weight: 600;">✅ Sample campaign data loaded (' + campaignData.length + ' data points)</p>';
+            showLoading();
+
+            // Simulate processing time for better UX
+            setTimeout(() => {
+                campaignData = sampleData;
+                processData();
+                document.getElementById('analysisSection').style.display = 'block';
+                document.getElementById('uploadArea').innerHTML = '<p style="color: #10b981; font-weight: 600;">✅ Sample campaign data loaded (' + campaignData.length + ' data points)</p>';
+
+                hideLoading();
+
+                // Smooth scroll to analysis section
+                setTimeout(() => {
+                    document.getElementById('analysisSection').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 100);
+
+                showMessage('Sample data loaded successfully! Explore the insights below.', 'success');
+            }, 800);
         }
 
         function downloadTemplate() {
@@ -443,13 +957,15 @@
             // Validate and clean data
             const validData = campaignData.filter(isValidRow);
             const invalidCount = campaignData.length - validData.length;
-            
+
             if (invalidCount > 0) {
                 console.warn(`Filtered out ${invalidCount} invalid rows`);
+                showMessage(`Note: ${invalidCount} rows were filtered due to missing or invalid data.`, 'info');
             }
-            
+
             if (validData.length === 0) {
-                alert('No valid data found. Please check your CSV format.');
+                showMessage('No valid data found. Please ensure your CSV has the required columns: Message_Category, Audience_Segment, Impressions, Clicks, and Cost.', 'error');
+                hideLoading();
                 return;
             }
 
@@ -606,9 +1122,13 @@
         }
 
         function initCharts() {
+            // Destroy existing charts if they exist
+            if (trendChart) trendChart.destroy();
+            if (audienceChart) audienceChart.destroy();
+
             const trendCtx = document.getElementById('trendChart').getContext('2d');
             const audienceCtx = document.getElementById('audienceChart').getContext('2d');
-            
+
             // Dynamic trend chart using real data
             const weeks = [...new Set(campaignData.map(d => d.Week))].sort((a, b) => parseInt(a) - parseInt(b));
             const avgCTRPerWeek = weeks.map(week => {
@@ -618,26 +1138,85 @@
                 return totalImpressions ? ((totalClicks / totalImpressions) * 100).toFixed(2) : 0;
             });
 
-            new Chart(trendCtx, {
+            trendChart = new Chart(trendCtx, {
                 type: 'line',
                 data: {
                     labels: weeks.map(w => `Week ${w}`),
                     datasets: [{
-                        label: 'Average CTR',
+                        label: 'Average CTR (%)',
                         data: avgCTRPerWeek,
                         borderColor: '#667eea',
                         backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                        tension: 0.4
+                        tension: 0.4,
+                        borderWidth: 3,
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                        pointBackgroundColor: '#667eea',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        fill: true
                     }]
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: true,
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 12,
+                                    weight: '600'
+                                },
+                                padding: 15
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(30, 41, 59, 0.95)',
+                            padding: 12,
+                            titleFont: {
+                                size: 14,
+                                weight: '600'
+                            },
+                            bodyFont: {
+                                size: 13
+                            },
+                            borderColor: '#667eea',
+                            borderWidth: 1,
+                            callbacks: {
+                                label: function(context) {
+                                    return 'CTR: ' + context.raw + '%';
+                                }
+                            }
+                        }
+                    },
                     scales: {
                         y: {
                             beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            },
                             ticks: {
                                 callback: function(value) {
                                     return value + '%';
+                                },
+                                font: {
+                                    size: 11
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    size: 11
                                 }
                             }
                         }
@@ -654,26 +1233,56 @@
                 return totalImpressions ? ((totalClicks / totalImpressions) * 100).toFixed(2) : 0;
             });
 
-            new Chart(audienceCtx, {
+            audienceChart = new Chart(audienceCtx, {
                 type: 'doughnut',
                 data: {
                     labels: audiences,
                     datasets: [{
                         data: audienceData,
-                        backgroundColor: ['#667eea', '#10b981', '#f59e0b', '#ef4444'],
-                        borderWidth: 0
+                        backgroundColor: ['#667eea', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'],
+                        borderWidth: 3,
+                        borderColor: '#fff',
+                        hoverBorderWidth: 4,
+                        hoverBorderColor: '#fff',
+                        hoverOffset: 10
                     }]
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: true,
+                    cutout: '60%',
                     plugins: {
                         legend: {
-                            position: 'bottom'
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    size: 12,
+                                    weight: '500'
+                                },
+                                padding: 15,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
                         },
                         tooltip: {
+                            backgroundColor: 'rgba(30, 41, 59, 0.95)',
+                            padding: 12,
+                            titleFont: {
+                                size: 14,
+                                weight: '600'
+                            },
+                            bodyFont: {
+                                size: 13
+                            },
+                            borderColor: '#667eea',
+                            borderWidth: 1,
                             callbacks: {
                                 label: function(context) {
-                                    return context.label + ': ' + context.raw + '% CTR';
+                                    const label = context.label || '';
+                                    const value = context.raw;
+                                    const total = context.dataset.data.reduce((a, b) => parseFloat(a) + parseFloat(b), 0);
+                                    const percentage = ((parseFloat(value) / total) * 100).toFixed(1);
+                                    return label + ': ' + value + '% CTR (' + percentage + '% of total)';
                                 }
                             }
                         }
@@ -698,20 +1307,44 @@
             input.onchange = function(e) {
                 const file = e.target.files[0];
                 if (file) {
+                    showLoading();
+
                     Papa.parse(file, {
                         header: true,
                         complete: function(results) {
-                            campaignData = results.data.filter(row => 
+                            campaignData = results.data.filter(row =>
                                 row.Message_Category && row.Audience_Segment
                             );
+
+                            if (campaignData.length === 0) {
+                                document.getElementById('uploadArea').innerHTML =
+                                    '<p style="color: #ef4444; font-weight: 600;">❌ No valid data found. Please check CSV format.</p>';
+                                hideLoading();
+                                showMessage('No valid data found in CSV. Please ensure it has Message_Category and Audience_Segment columns.', 'error');
+                                return;
+                            }
+
                             processData();
                             uploadFileToServer(file);
                             document.getElementById('analysisSection').style.display = 'block';
-                            document.getElementById('uploadArea').innerHTML = 
+                            document.getElementById('uploadArea').innerHTML =
                                 `<p style="color: #10b981; font-weight: 600;">✅ CSV uploaded successfully (${campaignData.length} data points)</p>`;
+
+                            hideLoading();
+
+                            // Smooth scroll to analysis
+                            setTimeout(() => {
+                                document.getElementById('analysisSection').scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'start'
+                                });
+                            }, 100);
+
+                            showMessage(`Successfully loaded ${campaignData.length} data points from your CSV!`, 'success');
                         },
                         error: function(error) {
-                            alert('Error parsing CSV: ' + error.message);
+                            hideLoading();
+                            showMessage('Error parsing CSV: ' + error.message, 'error');
                         }
                     });
                 }
@@ -733,30 +1366,50 @@
             uploadArea.classList.remove('dragover');
             const file = e.dataTransfer.files[0];
             if (file && file.type === 'text/csv') {
+                showLoading();
+
                 Papa.parse(file, {
                     header: true,
                     complete: function(results) {
-                        campaignData = results.data.filter(row => 
+                        campaignData = results.data.filter(row =>
                             row.Message_Category && row.Audience_Segment
                         );
-                        
+
                         if (campaignData.length === 0) {
-                            document.getElementById('uploadArea').innerHTML = 
+                            document.getElementById('uploadArea').innerHTML =
                                 '<p style="color: #ef4444; font-weight: 600;">❌ No valid data found. Please check CSV format.</p>';
+                            hideLoading();
+                            showMessage('No valid data found in CSV. Please ensure it has Message_Category and Audience_Segment columns.', 'error');
                             return;
                         }
-                        
+
                         processData();
                         document.getElementById('analysisSection').style.display = 'block';
                         uploadFileToServer(file);
-                        document.getElementById('uploadArea').innerHTML = 
+                        document.getElementById('uploadArea').innerHTML =
                             `<p style="color: #10b981; font-weight: 600;">✅ CSV uploaded successfully (${campaignData.length} data points)</p>`;
+
+                        hideLoading();
+
+                        // Smooth scroll to analysis
+                        setTimeout(() => {
+                            document.getElementById('analysisSection').scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }, 100);
+
+                        showMessage(`Successfully loaded ${campaignData.length} data points from your CSV!`, 'success');
                     },
                     error: function(error) {
-                        document.getElementById('uploadArea').innerHTML = 
+                        document.getElementById('uploadArea').innerHTML =
                             `<p style="color: #ef4444; font-weight: 600;">❌ Error parsing CSV: ${error.message}</p>`;
+                        hideLoading();
+                        showMessage('Error parsing CSV: ' + error.message, 'error');
                     }
                 });
+            } else if (file) {
+                showMessage('Please upload a CSV file only.', 'error');
             }
         });
     </script>
