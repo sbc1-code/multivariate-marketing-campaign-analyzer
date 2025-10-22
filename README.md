@@ -55,6 +55,8 @@ curl -F "file=@path/to/data.csv" http://localhost:3000/api/upload
 
 The application is automatically deployed to GitHub Pages using GitHub Actions.
 
+**Last Deployment:** October 22, 2025
+
 ### How It Works
 
 1. Any push to the `main` or `master` branch triggers the deployment workflow
