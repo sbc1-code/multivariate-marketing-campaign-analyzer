@@ -215,6 +215,59 @@
             padding: 2rem;
         }
 
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .clawdbot-panel {
+            background: #ffffff;
+            border: 1px solid #000000;
+            padding: 2rem;
+        }
+
+        .clawdbot-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .clawdbot-badge {
+            border: 1px solid #000000;
+            padding: 0.2rem 0.6rem;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: #000000;
+            color: #ffffff;
+        }
+
+        .clawdbot-insights {
+            list-style: none;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .clawdbot-insight {
+            border: 1px solid #cccccc;
+            padding: 0.85rem;
+            background: #ffffff;
+        }
+
+        .clawdbot-title {
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+            color: #000000;
+        }
+
+        .clawdbot-meta {
+            font-size: 0.85rem;
+            color: #333333;
+        }
+
         .rec-item {
             background: #ffffff;
             border-left: 4px solid #000000;
@@ -671,10 +724,25 @@
                     </div>
                 </div>
 
-                <div class="recommendations">
-                    <h2 class="section-title">Recommendations</h2>
-                    <div id="recommendationsContainer">
-                        <!-- Recommendations will be dynamically generated -->
+                <div class="side-panel">
+                    <div class="recommendations">
+                        <h2 class="section-title">Recommendations</h2>
+                        <div id="recommendationsContainer">
+                            <!-- Recommendations will be dynamically generated -->
+                        </div>
+                    </div>
+
+                    <div class="clawdbot-panel">
+                        <div class="clawdbot-header">
+                            <h2 class="section-title" style="margin-bottom: 0;">Clawdbot Insights</h2>
+                            <span class="clawdbot-badge">Installed</span>
+                        </div>
+                        <p style="color: #666666; font-size: 0.9rem; margin-bottom: 1rem;">
+                            Automated signals to highlight what Clawdbot would prioritize next.
+                        </p>
+                        <ul class="clawdbot-insights" id="clawdbotInsights">
+                            <!-- Clawdbot insights will be dynamically generated -->
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -1014,6 +1082,7 @@
             // Generate matrix and recommendations
             generatePerformanceMatrix();
             generateRecommendations();
+            generateClawdbotInsights();
             initCharts();
         }
 
@@ -1101,6 +1170,64 @@
             }
 
             document.getElementById('recommendationsContainer').innerHTML = html || '<p>Upload data to see recommendations</p>';
+        }
+
+        function generateClawdbotInsights() {
+            const insightsContainer = document.getElementById('clawdbotInsights');
+            const combos = Object.entries(processedData.combinations || {})
+                .map(([key, data]) => ({
+                    key,
+                    ...data,
+                    ctr: (data.clicks / data.impressions) * 100,
+                    cpc: data.cost / data.clicks
+                }))
+                .sort((a, b) => b.ctr - a.ctr);
+
+            if (!combos.length) {
+                insightsContainer.innerHTML = '<li class="clawdbot-insight">Upload data to activate Clawdbot insights.</li>';
+                return;
+            }
+
+            const messages = [...new Set(campaignData.map(d => d.Message_Category))];
+            const audiences = [...new Set(campaignData.map(d => d.Audience_Segment))];
+            const weeks = [...new Set(campaignData.map(d => d.Week).filter(Boolean))];
+            const missingWeeks = campaignData.filter(d => !d.Week || d.Week.toString().trim() === '').length;
+            const bestCtr = combos[0];
+            const bestCpc = [...combos].sort((a, b) => a.cpc - b.cpc)[0];
+            const underperformers = combos.filter(c => c.ctr < 0.15);
+
+            const insightItems = [
+                {
+                    title: 'Top CTR Focus',
+                    detail: `${bestCtr.message} + ${bestCtr.audience} leads with ${bestCtr.ctr.toFixed(2)}% CTR.`
+                },
+                {
+                    title: 'Cost Efficiency',
+                    detail: `${bestCpc.message} + ${bestCpc.audience} delivers the lowest CPC at $${bestCpc.cpc.toFixed(2)}.`
+                },
+                {
+                    title: 'Coverage Check',
+                    detail: `${messages.length} message themes × ${audiences.length} audience segments across ${weeks.length || 1} week(s).`
+                },
+                {
+                    title: 'Creative Risk',
+                    detail: `${underperformers.length} combination(s) below 0.15% CTR need a refresh.`
+                }
+            ];
+
+            if (missingWeeks > 0) {
+                insightItems.push({
+                    title: 'Data Quality',
+                    detail: `${missingWeeks} row(s) missing Week data—fill it in for stronger trend insights.`
+                });
+            }
+
+            insightsContainer.innerHTML = insightItems.map(item => `
+                <li class="clawdbot-insight">
+                    <div class="clawdbot-title">${item.title}</div>
+                    <div class="clawdbot-meta">${item.detail}</div>
+                </li>
+            `).join('');
         }
 
         function initCharts() {
