@@ -1,6 +1,6 @@
-# multivariate-marketing-campaign-analyzer
+# Multivariate Marketing Campaign Analyzer
 
-Analytics tool for multi-variant campaign performance analysis.
+A browser-based analyzer for multi-variant marketing campaigns. Marketers running A/B/n tests typically either wait days for a BI team to build a dashboard or eyeball results in a spreadsheet. This tool sits in between: drop in a campaign CSV, get instant variant-by-variant comparisons with interactive Chart.js visualizations, all running entirely client-side with no backend required.
 
 ## Live Demo
 
